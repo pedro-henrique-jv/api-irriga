@@ -140,10 +140,6 @@ Method: DELETE
 ```
 http://localhost/api-irriga/pivots/{id}
 ```
-## Endpoints de Registros de Irrigação
-
-Todas as rotas abaixo exigem token JWT.
-
 ### Criar Registro
 
 Method: POST

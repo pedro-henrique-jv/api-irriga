@@ -15,7 +15,7 @@ if (strpos($path, '/auth') !== false) {
     require_once 'routes/pivots.php';
 } elseif (strpos($path, '/irrigations') !== false) {
     require_once 'routes/irrigations.php';
-} elseif ($path === '/api-irrigacao' || $path === '/api-irrigacao/') {
+} elseif ($path === '/api-irriga' || $path === '/api-irriga/') {
     echo json_encode([
         "nome" => "API de Irrigação",
         "descricao" => "API REST para controle de irrigação inteligente.",

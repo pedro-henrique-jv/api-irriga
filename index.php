@@ -13,8 +13,14 @@ if (strpos($path, '/auth') !== false) {
     require_once 'routes/auth.php';
 } elseif (strpos($path, '/pivots') !== false) {
     require_once 'routes/pivots.php';
-} else if(strpos($path, '/irrigations') !== false) {
+} elseif (strpos($path, '/irrigations') !== false) {
     require_once 'routes/irrigations.php';
+} elseif ($path === '/api-irrigacao' || $path === '/api-irrigacao/') {
+    echo json_encode([
+        "nome" => "API de Irrigação",
+        "descricao" => "API REST para controle de irrigação inteligente.",
+    ]);
+    exit;
 } else {
     http_response_code(404);
     echo json_encode(['error' => 'Rota não encontrada']);

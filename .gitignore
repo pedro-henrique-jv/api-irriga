@@ -1,5 +1,4 @@
 .env
 /vendor
-/storage/*.json
 .DS_Store
 *.log

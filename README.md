@@ -47,7 +47,7 @@ php -r "echo 'JWT_SECRET=' . base64_encode(random_bytes(32)) . PHP_EOL;"
 
 Todas as rotas (exceto /auth/register e /auth/login) exigem um token JWT no cabeçalho Authorization:
 
-## Roteiro de Testes (via Postman)
+## Guia de Testes (via Postman)
 
 ### 1. Registro de Usuário
 

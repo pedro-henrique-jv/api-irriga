@@ -43,10 +43,6 @@ Use este comando PHP para gerar a chave e copie manualmente para .env:
 php -r "echo 'JWT_SECRET=' . base64_encode(random_bytes(32)) . PHP_EOL;"
 ```
 
-## Autenticação JWT
-
-Todas as rotas (exceto /auth/register e /auth/login) exigem um token JWT no cabeçalho Authorization:
-
 ## Guia de Testes (via Postman)
 
 ### 1. Registro de Usuário
@@ -93,7 +89,10 @@ Resposta esperada:
 
 ## Endpoints de Pivôs de Irrigação
 
-Todas as rotas abaixo exigem token JWT.
+Todas as rotas (exceto /auth/register e /auth/login) exigem um token no cabeçalho Authorization:
+   - Vá para a aba Authorization no Postman.
+   - Em Auth Type, escolha: Bearer Token.
+   - No campo que aparece, cole seu token.
 
 ### Criar Pivô
 

@@ -1,6 +1,6 @@
 # API de Gerenciamento de Irrigação
 
-Este projeto é uma API RESTful desenvolvida em PHP 8.2.12 puro, com autenticação via JWT e gerenciamento de pivôs de irrigação e registros de irrigação. Foi utilizado o XAMPP para ambiente local e o Postman para testes.
+Este projeto é uma API RESTful desenvolvida em PHP 8.2.12, com autenticação via JWT, gerenciamento de pivôs e de registros de irrigação. Foi utilizado o XAMPP para ambiente local e o Postman para testes.
 
 ## Tecnologias Utilizadas
 
@@ -12,55 +12,74 @@ Este projeto é uma API RESTful desenvolvida em PHP 8.2.12 puro, com autenticaç
 
 ## Como Executar o Projeto
 
-1. Clonar o repositório:
-   git clone https://github.com/pedro-henrique-jv/api-irrigacao.git
-
-2. Mover para a pasta do projeto:
-   cd api-irriga
-
-3. Instalar dependências com o Composer:
+1. Clonar o repositório (se possível clone direto para a pasta do servidor Apache (htdocs), ou mova para la):
+   ```
+   git clone https://github.com/pedro-henrique-jv/api-irriga.git
+   ```
+   
+2. Instalar dependências com o Composer:
+   ```
    composer install
+   ```
+   
+3. Iniciar o Apache via painel do XAMPP
 
-4. Colocar o projeto na pasta do servidor Apache (htdocs):
-   Copie os arquivos para: C:\xampp\htdocs\api-irrigacao
-
-5. Iniciar o Apache via painel do XAMPP
-
-6. Acessar a API em:
-   http://localhost/api-irrigacao
+8. Acessar a API em:
+   [http://localhost/api-irriga](http://localhost/api-irriga)
 
 Observação: A persistência é feita em memória, então não é necessário configurar banco de dados.
+
+## Criando o arquivo .env
+
+Para sua API funcionar, crie um arquivo chamado .env na raiz do projeto com o conteúdo abaixo.
+```
+JWT_SECRET=uma_chave_secreta_forte_aqui
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=
+```
+Use este comando PHP para gerar a chave e copie manualmente para .env:
+```
+php -r "echo 'JWT_SECRET=' . base64_encode(random_bytes(32)) . PHP_EOL;"
+```
 
 ## Autenticação JWT
 
 Todas as rotas (exceto /auth/register e /auth/login) exigem um token JWT no cabeçalho Authorization:
 
-Authorization: Bearer SEU_TOKEN_AQUI
-
 ## Roteiro de Testes (via Postman)
 
 ### 1. Registro de Usuário
 
-POST http://localhost/api-irriga/authcao/register
+Method: POST 
+```
+http://localhost/api-irriga/auth/register
+````
 
 Body (JSON):
+```
 {
     "name": "usuario1",
     "email": "usuario1@teste.com",
     "password": "senha123"
 }
-
+```
 ### 2. Login de Usuário
 
-POST http://localhost/api-irrigacao/auth/login
+Method: POST 
+```
+http://localhost/api-irriga/auth/login
+```
 
 Body (JSON):
+```
 {
-  "name": "usuario1",
-  "password": "senha123"
+    "email": "usuario1@teste.com",
+    "password": "senha123"
 }
-
+```
 Resposta esperada:
+```
 {
     "success": true,
     "token": "JWT_TOKEN_AQUI",
@@ -70,6 +89,7 @@ Resposta esperada:
         "id": "UUID_DO_USUARIO_GERADO"
     }
 }
+```
 
 ## Endpoints de Pivôs de Irrigação
 
@@ -77,61 +97,83 @@ Todas as rotas abaixo exigem token JWT.
 
 ### Criar Pivô
 
-POST http://localhost/api-irrigacao/pivots
-
+Method: POST 
+```
+http://localhost/api-irriga/pivots
+```
 Body:
+```
 {
   "description": "Pivô Fazenda A",
   "flowRate": 150.5,
   "minApplicationDepth": 5.0
 }
-
+```
 ### Listar Pivôs
 
-GET http://localhost/api-irrigacao/pivots
-
+Method: GET 
+```
+http://localhost/api-irriga/pivots
+```
 ### Obter Pivô por ID
 
-GET http://localhost/api-irrigacao/pivots/{id}
-
+Method: GET 
+```
+http://localhost/api-irriga/pivots/{id}
+```
 ### Atualizar Pivô
 
-PUT http://localhost/api-irrigacao/pivots/{id}
-
+Method: PUT
+```
+http://localhost/api-irriga/pivots/{id}
+```
 Body:
+```
 {
   "description": "Pivô Atualizado",
   "flowRate": 160.0,
   "minApplicationDepth": 6.0
 }
-
+```
 ### Deletar Pivô
 
-DELETE http://localhost/api-irrigacao/pivots/{id}
-
+Method: DELETE
+```
+http://localhost/api-irriga/pivots/{id}
+```
 ## Endpoints de Registros de Irrigação
 
 Todas as rotas abaixo exigem token JWT.
 
 ### Criar Registro
 
-POST http://localhost/api-irrigacao/irrigations
-
+Method: POST
+```
+http://localhost/api-irriga/irrigations
+```
 Body:
+```
 {
   "pivotId": "UUID_DO_PIVO",
   "applicationAmount": 20.0,
   "irrigationDate": "2025-07-01T10:00:00Z"
 }
-
+```
 ### Listar Registros
 
-GET http://localhost/api-irrigacao/irrigations
-
+Method: GET
+```
+http://localhost/api-irriga/irrigations
+```
 ### Obter Registro por ID
 
-GET http://localhost/api-irrigacao/irrigations/{id}
-
+Method: GET
+```
+http://localhost/api-irriga/irrigations/{id}
+```
 ### Deletar Registro
 
-DELETE http://localhost/api-irrigacao/irrigations/{id}
+Method: DELETE 
+```
+http://localhost/api-irriga/irrigations/{id}
+```

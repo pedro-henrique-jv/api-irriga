@@ -22,12 +22,12 @@ Este projeto é uma API RESTful desenvolvida em PHP 8.2.12 puro, com autenticaç
    composer install
 
 4. Colocar o projeto na pasta do servidor Apache (htdocs):
-   Copie os arquivos para: C:\xampp\htdocs\api-irriga
+   Copie os arquivos para: C:\xampp\htdocs\api-irrigacao
 
 5. Iniciar o Apache via painel do XAMPP
 
 6. Acessar a API em:
-   http://localhost/api-irriga
+   http://localhost/api-irrigacao
 
 Observação: A persistência é feita em memória, então não é necessário configurar banco de dados.
 
@@ -41,7 +41,7 @@ Authorization: Bearer SEU_TOKEN_AQUI
 
 ### 1. Registro de Usuário
 
-POST http://localhost/api-irriga/auth/register
+POST http://localhost/api-irriga/authcao/register
 
 Body (JSON):
 {
@@ -52,7 +52,7 @@ Body (JSON):
 
 ### 2. Login de Usuário
 
-POST http://localhost/api-irriga/auth/login
+POST http://localhost/api-irrigacao/auth/login
 
 Body (JSON):
 {
@@ -77,7 +77,7 @@ Todas as rotas abaixo exigem token JWT.
 
 ### Criar Pivô
 
-POST http://localhost/api-irriga/pivots
+POST http://localhost/api-irrigacao/pivots
 
 Body:
 {
@@ -88,15 +88,15 @@ Body:
 
 ### Listar Pivôs
 
-GET http://localhost/api-irriga/pivots
+GET http://localhost/api-irrigacao/pivots
 
 ### Obter Pivô por ID
 
-GET http://localhost/api-irriga/pivots/{id}
+GET http://localhost/api-irrigacao/pivots/{id}
 
 ### Atualizar Pivô
 
-PUT http://localhost/api-irriga/pivots/{id}
+PUT http://localhost/api-irrigacao/pivots/{id}
 
 Body:
 {
@@ -107,7 +107,7 @@ Body:
 
 ### Deletar Pivô
 
-DELETE http://localhost/api-irriga/pivots/{id}
+DELETE http://localhost/api-irrigacao/pivots/{id}
 
 ## Endpoints de Registros de Irrigação
 
@@ -115,7 +115,7 @@ Todas as rotas abaixo exigem token JWT.
 
 ### Criar Registro
 
-POST http://localhost/api-irriga/irrigations
+POST http://localhost/api-irrigacao/irrigations
 
 Body:
 {
@@ -126,12 +126,12 @@ Body:
 
 ### Listar Registros
 
-GET http://localhost/api-irriga/irrigations
+GET http://localhost/api-irrigacao/irrigations
 
 ### Obter Registro por ID
 
-GET http://localhost/api-irriga/irrigations/{id}
+GET http://localhost/api-irrigacao/irrigations/{id}
 
 ### Deletar Registro
 
-DELETE http://localhost/api-irriga/irrigations/{id}
+DELETE http://localhost/api-irrigacao/irrigations/{id}

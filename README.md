@@ -31,7 +31,7 @@ Observação: A persistência é feita em memória, então não é necessário c
 
 ## Criando o arquivo .env
 
-Para sua API funcionar, crie um arquivo chamado .env na raiz do projeto com o conteúdo abaixo.
+Para a API funcionar, crie um arquivo chamado .env na raiz do projeto com o conteúdo abaixo.
 ```
 JWT_SECRET=uma_chave_secreta_forte_aqui
 DB_HOST=localhost
@@ -52,7 +52,7 @@ Method: POST
 http://localhost/api-irriga/auth/register
 ````
 
-Body (JSON):
+Body (raw -> JSON):
 ```
 {
     "name": "usuario1",
@@ -67,7 +67,7 @@ Method: POST
 http://localhost/api-irriga/auth/login
 ```
 
-Body (JSON):
+Body (raw -> JSON):
 ```
 {
     "email": "usuario1@teste.com",
@@ -100,7 +100,7 @@ Method: POST
 ```
 http://localhost/api-irriga/pivots
 ```
-Body:
+Body (raw -> JSON):
 ```
 {
   "description": "Pivô Fazenda A",
@@ -126,7 +126,7 @@ Method: PUT
 ```
 http://localhost/api-irriga/pivots/{id}
 ```
-Body:
+Body (raw -> JSON):
 ```
 {
   "description": "Pivô Atualizado",
@@ -150,7 +150,7 @@ Method: POST
 ```
 http://localhost/api-irriga/irrigations
 ```
-Body:
+Body (raw -> JSON):
 ```
 {
   "pivotId": "UUID_DO_PIVO",

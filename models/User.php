@@ -20,7 +20,7 @@ class User {
             'id'       => $this->id,
             'name'     => $this->name,
             'email'    => $this->email,
-            'password' => $this->password
+            //'password' => $this->password n retorna a senha na requisição
         ];
     }
 
@@ -28,7 +28,7 @@ class User {
         return isset($data['name'], $data['email'], $data['password']) &&
             filter_var($data['email'], FILTER_VALIDATE_EMAIL);
     }
-
+    /*
     public static function fromArray(array $data): ?User {
         if (!self::validate($data)) {
             return null;
@@ -41,4 +41,5 @@ class User {
             $data['password']
         );
     }
+    */
 }

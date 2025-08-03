@@ -6,6 +6,7 @@ use Models\User;
 use Helpers\JsonStorage;
 use Firebase\JWT\JWT;
 use Dotenv\Dotenv;
+use Ramsey\Uuid\Uuid;
 
 class UserController {
     private JsonStorage $storage;
@@ -18,18 +19,6 @@ class UserController {
         $dotenv->load();
 
         $this->jwtSecret = $_ENV['JWT_SECRET'];
-    }
-
-    public function getAll(): array {
-        $rawUsers = $this->storage->read();
-        return array_map(function ($userData) {
-            return (new User(
-                $userData['id'],
-                $userData['name'],
-                $userData['email'],
-                $userData['password']
-            ))->toArray();
-        }, $rawUsers);
     }
 
     public function create(array $data): array {
@@ -45,9 +34,7 @@ class UserController {
             }
         }
 
-        $ids = array_column($users, 'id');
-        $maxId = !empty($ids) ? max($ids) : 0;
-        $data['id'] = $maxId + 1;
+        $data['id'] = Uuid::uuid4()->toString();
         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
         $users[] = $data;
@@ -83,53 +70,5 @@ class UserController {
         }
 
         return ['error' => 'Credenciais inválidas'];
-    }
-
-    public function getById(string $id): array {
-        $users = $this->storage->read();
-
-        foreach ($users as $user) {
-            if ((string)$user['id'] === $id) {
-                unset($user['password']);
-                return $user;
-            }
-        }
-
-        return ['error' => 'Usuário não encontrado'];
-    }
-
-    public function update(string $id, array $data): array {
-        $users = $this->storage->read();
-        $updated = false;
-
-        foreach ($users as &$user) {
-            if ((string)$user['id'] === $id) {
-                if (isset($data['password'])) {
-                    $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-                }
-                $user = array_merge($user, $data);
-                $updated = true;
-                break;
-            }
-        }
-
-        if (!$updated) {
-            return ['error' => 'Usuário não encontrado'];
-        }
-
-        $this->storage->write($users);
-        return ['success' => true, 'user' => $data];
-    }
-
-    public function delete(string $id): array {
-        $users = $this->storage->read();
-        $newUsers = array_filter($users, fn($user) => (string)$user['id'] !== (string)$id);
-
-        if (count($newUsers) === count($users)) {
-            return ['error' => 'Usuário não encontrado'];
-        }
-
-        $this->storage->write(array_values($newUsers));
-        return ['success' => true];
     }
 }

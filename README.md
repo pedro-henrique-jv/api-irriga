@@ -13,7 +13,7 @@ Este projeto é uma API RESTful desenvolvida em PHP 8.2.12 puro, com autenticaç
 ## Como Executar o Projeto
 
 1. Clonar o repositório:
-   git clone https://github.com/pedro-henrique-jv/api-irriga.git
+   git clone https://github.com/pedro-henrique-jv/api-irrigacao.git
 
 2. Mover para a pasta do projeto:
    cd api-irriga
@@ -29,7 +29,7 @@ Este projeto é uma API RESTful desenvolvida em PHP 8.2.12 puro, com autenticaç
 6. Acessar a API em:
    http://localhost/api-irriga
 
-Observação: A persistência é feita em memória (via arrays ou arquivos), então não é necessário configurar banco de dados.
+Observação: A persistência é feita em memória, então não é necessário configurar banco de dados.
 
 ## Autenticação JWT
 
@@ -45,8 +45,9 @@ POST http://localhost/api-irriga/auth/register
 
 Body (JSON):
 {
-  "username": "usuario1",
-  "password": "senha123"
+    "name": "usuario1",
+    "email": "usuario1@teste.com",
+    "password": "senha123"
 }
 
 ### 2. Login de Usuário
@@ -55,13 +56,19 @@ POST http://localhost/api-irriga/auth/login
 
 Body (JSON):
 {
-  "username": "usuario1",
+  "name": "usuario1",
   "password": "senha123"
 }
 
 Resposta esperada:
 {
-  "token": "JWT_TOKEN_AQUI"
+    "success": true,
+    "token": "JWT_TOKEN_AQUI",
+    "user": {
+        "name": "usuario1",
+        "email": "usuario1@teste.com",
+        "id": "UUID_DO_USUARIO_GERADO"
+    }
 }
 
 ## Endpoints de Pivôs de Irrigação
@@ -128,60 +135,3 @@ GET http://localhost/api-irriga/irrigations/{id}
 ### Deletar Registro
 
 DELETE http://localhost/api-irriga/irrigations/{id}
-
-## Testes de Exceções
-
-### Acesso sem Token
-
-Qualquer rota protegida sem Authorization retorna:
-{
-  "error": "Unauthorized"
-}
-
-### Token Inválido
-
-Authorization: Bearer TOKEN_INVALIDO
-
-Resposta:
-{
-  "error": "Invalid token"
-}
-
-### Campos Faltando
-
-POST http://localhost/api-irriga/pivots
-
-Body incompleto:
-{
-  "description": "Pivô sem vazão"
-}
-
-Resposta:
-{
-  "error": "Missing required fields: flowRate, minApplicationDepth"
-}
-
-### Tentativa de Usar Pivot de Outro Usuário
-
-POST http://localhost/api-irriga/irrigations
-
-Body:
-{
-  "pivotId": "ID_QUE_NAO_PERTENCE_AO_USUARIO",
-  "applicationAmount": 10,
-  "irrigationDate": "2025-08-01T12:00:00Z"
-}
-
-Resposta:
-{
-  "error": "Access denied to pivot"
-}
-
-## Considerações Finais
-
-Este projeto foi desenvolvido com foco em lógica de autenticação, segurança de rotas e validação. A persistência é simplificada para focar nos requisitos principais. Melhorias futuras podem incluir:
-
-- Banco de dados relacional (MySQL ou SQLite)
-- Middleware mais robusto
-- Testes automatizados com PHPUnit
-- Interface gráfica para consumo da API
